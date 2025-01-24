@@ -133,6 +133,7 @@ function createCone(coneConfig) {
         } else {
           const page = route.component(_params, _query, _context);
           if (page instanceof HTMLElement || typeof page === "string") {
+            console.log("HTMLElement or string");
             return replaceContent(page);
           } else {
             page
@@ -147,6 +148,7 @@ function createCone(coneConfig) {
               })
               .catch((error) => console.error("error changing page", error));
 
+            console.log("Added loading...");
             const content = div("Loading...");
             return replaceContent(content);
           }
