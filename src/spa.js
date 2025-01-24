@@ -218,15 +218,17 @@ function createCone(coneConfig) {
           event.preventDefault();
           navigate(name, { params, query, navState, context });
         },
-        onmouseenter: preload ? preloadContent(preloadedUrls) : null,
+        onmouseenter: preload
+          ? (event) => preloadContent(event.target, preloadedUrls)
+          : null,
         ...otherProps,
       },
       children
     );
   }
 
-  function preloadContent(preloadedUrls) {
-    const url = this.href;
+  function preloadContent(element, preloadedUrls) {
+    const url = element.href;
 
     // Skip if already preloaded or if it's an anchor link
     if (preloadedUrls.has(url) || url.startsWith("#") || !url) {
