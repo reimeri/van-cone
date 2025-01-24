@@ -138,14 +138,17 @@ function createCone(coneConfig) {
             page
               .then((page) => {
                 if (typeof page === "string") {
-                  return replaceContent(page);
+                  replaceContent(page);
                 } else if ("default" in page) {
-                  return replaceContent(page.default);
+                  replaceContent(page.default);
                 } else {
-                  return replaceContent(page);
+                  replaceContent(page);
                 }
               })
               .catch((error) => console.error("error changing page", error));
+
+            const content = div("Loading...");
+            return replaceContent(content);
           }
         }
       }
