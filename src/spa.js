@@ -144,12 +144,7 @@ function createCone(coneConfig) {
               van.tags.div({
                 id: "loading-" + route.name,
               });
-            const existingLoading = routerElement.querySelector(
-              `#loading-${route.name}`
-            );
-            if (!existingLoading) {
-              replaceContent(loadingContent);
-            }
+            replaceContent(loadingContent);
 
             // Clear existing content and show loading component first
             page
