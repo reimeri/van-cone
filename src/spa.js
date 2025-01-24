@@ -149,7 +149,8 @@ function createCone(coneConfig) {
               .catch((error) => console.error("error changing page", error));
 
             console.log("Added loading...");
-            const content = div("Loading...");
+            const content =
+              route.loadingComponent || van.tags.div({ id: "loading" });
             return replaceContent(content);
           }
         }
@@ -157,8 +158,14 @@ function createCone(coneConfig) {
     );
   };
 
-  const route = (routeName, path, component, options) =>
-    buildRoute({ name: routeName, path, component, ...options });
+  const route = (routeName, path, component, loadingComponent, options) =>
+    buildRoute({
+      name: routeName,
+      path,
+      component,
+      loadingComponent,
+      ...options,
+    });
 
   // nav state
   const _defaultNavState =

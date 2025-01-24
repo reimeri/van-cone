@@ -1,7 +1,10 @@
 import { State } from "vanjs-core";
 
 declare const parametersPattern: RegExp;
-declare type ConeComponent = HTMLElement | (() => HTMLElement) | (() => Promise<typeof import(HTMLElement)>)
+declare type ConeComponent =
+  | HTMLElement
+  | (() => HTMLElement)
+  | (() => Promise<typeof import(HTMLElement)>);
 declare type RouteParams = Record<string, string>;
 declare type Route = {
   name: string;
@@ -39,12 +42,7 @@ declare class Router {
   prefix: string;
   backendPrefix: string;
 
-  add(
-    name: string,
-    path: string,
-    backend: string,
-    handler: RouteHandler
-  ): void;
+  add(name: string, path: string, backend: string, handler: RouteHandler): void;
 
   dispatch(url: string, context: RouterContext): void;
 
@@ -55,11 +53,7 @@ declare class Router {
     query: QueryParams
   ): string;
 
-  navUrl(
-    routeName: string,
-    params?: RouteParams,
-    query?: QueryParams
-  ): string;
+  navUrl(routeName: string, params?: RouteParams, query?: QueryParams): string;
 
   backendUrl(
     routeName: string,
@@ -69,14 +63,15 @@ declare class Router {
 }
 
 declare type RouteFunctionOptions = {
-  backend?: string
-  title?: string
+  backend?: string;
+  title?: string;
 };
 
 declare function route(
   routeName: string,
   path: string,
   component: ConeComponent,
+  loadingComponent?: HTMLElement,
   options?: RouteFunctionOptions
 ): Route;
 
@@ -84,26 +79,32 @@ declare type coneApp = {
   routerElement: HTMLElement;
   currentPage: State<string>;
   route: route;
-  navUrl: (routeName: string, params?: RouteParams, query?: QueryParams) => string;
-  backendUrl: (routeName: string, params?: RouteParams, query?: QueryParams) => string;
+  navUrl: (
+    routeName: string,
+    params?: RouteParams,
+    query?: QueryParams
+  ) => string;
+  backendUrl: (
+    routeName: string,
+    params?: RouteParams,
+    query?: QueryParams
+  ) => string;
   navState: State<NavState>;
   getNavState: () => NavState;
   setNavState: (newState: NavState) => void;
   navigate: (routeName: string, options?: NavigateOptions) => void;
   pushHistory: (routeName: string, options?: NavigateOptions) => void;
   isCurrentPage: () => boolean;
-  link: (props: Record<string, any>, ...children:any[]) => HTMLAnchorElement
+  link: (props: Record<string, any>, ...children: any[]) => HTMLAnchorElement;
 };
 
 declare type ConeConfig = {
-  routerElement: HTMLElement,
-  defaultNavState?: NavState,
-  routerConfig?: RouterConfig
+  routerElement: HTMLElement;
+  defaultNavState?: NavState;
+  routerConfig?: RouterConfig;
 };
 
-declare function createCone(
-  coneConfig: ConeConfig
-): coneApp;
+declare function createCone(coneConfig: ConeConfig): coneApp;
 
 export default createCone;
 export { route };
