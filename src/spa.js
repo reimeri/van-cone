@@ -135,11 +135,23 @@ function createCone(coneConfig) {
           if (page instanceof HTMLElement || typeof page === "string") {
             return replaceContent(page);
           } else {
-            // Clear existing content and show loading component first
+            // Show loading component
+            if (route.loadingComponent) {
+              route.loadingComponent.id = "loading-" + route.name;
+            }
             const loadingContent =
-              route.loadingComponent || van.tags.div({ id: "loading" });
-            replaceContent(loadingContent);
+              route.loadingComponent ||
+              van.tags.div({
+                id: "loading-" + route.name,
+              });
+            const existingLoading = routerElement.querySelector(
+              `#loading-${route.name}`
+            );
+            if (!existingLoading) {
+              replaceContent(loadingContent);
+            }
 
+            // Clear existing content and show loading component first
             page
               .then((page) => {
                 if (typeof page === "string") {
