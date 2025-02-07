@@ -139,14 +139,17 @@ function createCone(coneConfig) {
             if (route.loadingComponent) {
               route.loadingComponent.id = "loading-" + route.name;
             }
-            const loadingContent =
-              route.loadingComponent ||
-              van.tags.div({
-                id: "loading-" + route.name,
-              });
-            replaceContent(loadingContent);
-
             // Clear existing content and show loading component first
+            // Wait 50 ms before showing loading component to avoid flicker
+            setTimeout(() => {
+              const loadingContent =
+                route.loadingComponent ||
+                van.tags.div({
+                  id: "loading-" + route.name,
+                });
+              replaceContent(loadingContent);
+            }, 50);
+
             page
               .then((page) => {
                 if (typeof page === "string") {
