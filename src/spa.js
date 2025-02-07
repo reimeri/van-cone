@@ -140,20 +140,15 @@ function createCone(coneConfig) {
               route.loadingComponent.id = "loading-" + route.name;
             }
             // Clear existing content and show loading component first
-            // Wait 50 ms before showing loading component to avoid flicker
-            const loadingTimer = setTimeout(() => {
-              const loadingContent =
-                route.loadingComponent ||
-                van.tags.div({
-                  id: "loading-" + route.name,
-                });
-              replaceContent(loadingContent);
-            }, 50);
+            const loadingContent =
+              route.loadingComponent ||
+              van.tags.div({
+                id: "loading-" + route.name,
+              });
+            replaceContent(loadingContent);
 
             page
               .then((page) => {
-                // Cancel the loading component timer if it's still running
-                clearTimeout(loadingTimer);
                 if (typeof page === "string") {
                   return replaceContent(page);
                 } else if ("default" in page) {
